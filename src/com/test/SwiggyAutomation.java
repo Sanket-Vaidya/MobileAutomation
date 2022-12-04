@@ -20,7 +20,10 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
 
-
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -36,12 +39,23 @@ public class SwiggyAutomation {
 	public static AndroidDriver<AndroidElement> driver;
 	
 	public String destDir;
-	public DateFormat dateFormat;
+	public DateFormat dateFormat=new SimpleDateFormat("dd-MM-YYYY_hh_mm_ss");
+	
+	public ExtentSparkReporter spark;
+	public ExtentReports reports;
+	public ExtentTest logger;
 
 	@Test
 	public void launchChromeBrowser() throws MalformedURLException, InterruptedException {
+		
+		reports = new ExtentReports();
+		spark = new ExtentSparkReporter("./TestReport/AutomationReport"+dateFormat.format(new Date())+".html");
+		spark.config().setTheme(Theme.DARK);
+		reports.attachReporter(spark);
 
 		DesiredCapabilities caps = new DesiredCapabilities();
+		
+		logger=reports.createTest("Swiggy Automation");
 
 		caps.setCapability("platformName", "Android");
 		caps.setCapability("deviceName", "emulator-5554");
@@ -58,6 +72,8 @@ public class SwiggyAutomation {
 		driver.findElement(By.id("in.swiggy.android:id/location_header")).click();
 
 		Thread.sleep(3000);
+		
+	
 
 		driver.findElement(By.id("in.swiggy.android:id/location_description")).sendKeys("Pruthvi Ekdant");
 
@@ -91,7 +107,9 @@ public class SwiggyAutomation {
 		String ExpectedRestaurant = "The Egg Break";
 		String actualReastaurant = driver.findElementByAccessibilityId("The Egg Break").getText();
 
-		Assert.assertEquals(ExpectedRestaurant, actualReastaurant);
+		if (ExpectedRestaurant.equalsIgnoreCase(actualReastaurant)) {
+			logger.pass("Restaurant name is correct");
+		}
 
 		driver.findElementById("in.swiggy.android:id/quantity_text_1").click();
 
@@ -100,11 +118,15 @@ public class SwiggyAutomation {
 		String actualPrice = driver.findElementByAccessibilityId("price ₹100.95 rupees").getText();
 		String ExpectedPrice = "₹100.95";
 
-		Assert.assertEquals(actualPrice, ExpectedPrice);
+		if(actualPrice.equals(ExpectedPrice)) {
+			logger.pass("Price is correct");
+		}
 
 		Thread.sleep(3000);
 
 		action.press(PointOption.point(771, 2152)).release().perform();
+		
+		reports.flush();
 
 	}
 	public void takeScreenShot() {
@@ -119,7 +141,7 @@ public class SwiggyAutomation {
 		
 		//setting file name for screenshot
 		
-		dateFormat=new SimpleDateFormat("dd-MM-YYYY_hh_mm_ss");
+		
 		
 		new File(destDir).mkdirs();
 		

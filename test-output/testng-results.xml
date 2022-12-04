@@ -2,12 +2,12 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2022-12-04T22:53:56 IST" name="Suite" finished-at="2022-12-04T22:54:54 IST" duration-ms="57454">
+  <suite started-at="2022-12-04T23:23:41 IST" name="Suite" finished-at="2022-12-04T23:24:40 IST" duration-ms="58337">
     <groups>
     </groups>
-    <test started-at="2022-12-04T22:53:56 IST" name="Test" finished-at="2022-12-04T22:54:54 IST" duration-ms="57454">
+    <test started-at="2022-12-04T23:23:41 IST" name="Test" finished-at="2022-12-04T23:24:40 IST" duration-ms="58337">
       <class name="com.test.SwiggyAutomation">
-        <test-method signature="launchChromeBrowser()[pri:0, instance:com.test.SwiggyAutomation@2a54a73f]" started-at="2022-12-04T22:53:56 IST" name="launchChromeBrowser" finished-at="2022-12-04T22:54:53 IST" duration-ms="56415" status="PASS">
+        <test-method signature="launchChromeBrowser()[pri:0, instance:com.test.SwiggyAutomation@4803b726]" started-at="2022-12-04T23:23:41 IST" name="launchChromeBrowser" finished-at="2022-12-04T23:24:39 IST" duration-ms="57271" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- launchChromeBrowser -->
