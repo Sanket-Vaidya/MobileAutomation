@@ -1,16 +1,26 @@
 package com.test;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
+
+
 
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
@@ -20,10 +30,13 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.offset.PointOption;
-
+@Listeners(ScreenShot.class)
 public class SwiggyAutomation {
 
-	public AndroidDriver<AndroidElement> driver;
+	public static AndroidDriver<AndroidElement> driver;
+	
+	public String destDir;
+	public DateFormat dateFormat;
 
 	@Test
 	public void launchChromeBrowser() throws MalformedURLException, InterruptedException {
@@ -93,6 +106,35 @@ public class SwiggyAutomation {
 
 		action.press(PointOption.point(771, 2152)).release().perform();
 
+	}
+	public void takeScreenShot() {
+		
+		//Define the folder to save screenshot
+		
+		destDir="./Screenshot";
+		
+		//code for capturing screenshot
+		
+		File srcFile=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		
+		//setting file name for screenshot
+		
+		dateFormat=new SimpleDateFormat("dd-MM-YYYY_hh_mm_ss");
+		
+		new File(destDir).mkdirs();
+		
+		String destFile=dateFormat.format(new Date())+".png";
+		
+		try {
+			
+			FileUtils.copyFile(srcFile, new File(destDir+"/"+destFile));
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			
+		}
+				
 	}
 
 }
