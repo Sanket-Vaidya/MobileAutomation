@@ -126,6 +126,8 @@ public class SwiggyAutomation {
 
 		action.press(PointOption.point(771, 2152)).release().perform();
 		
+		logger.pass("Item Added to cart");
+		
 		reports.flush();
 
 	}
